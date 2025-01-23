@@ -1,6 +1,7 @@
 # https://www.circuitbasics.com/raspberry-pi-i2c-lcd-set-up-and-programming/
 # https://finnhub.io/docs/api
 
+import sys
 import time
 from datetime import datetime
 import finnhub
@@ -23,7 +24,6 @@ def get_vix_price():
     percent_change = soup.select_one(f'fin-streamer[data-field="regularMarketChangePercent"][data-symbol="{ticker}"]')
 
     return {"vix_value": float(price['data-value']),"vix_percent_change": float(percent_change['data-value'])}
-
 
 
 TICKERS = ["DJT", "TSLA", "RDDT"]
@@ -57,6 +57,12 @@ else:
 
 finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)
 mylcd = I2C_LCD_driver.lcd()
+
+if COINMARKETCAP_API_KEY == "":
+    raise ValueError("COINMARKETCAP_API_KEY isn't set!")
+
+if FINNHUB_API_KEY == "":
+    raise ValueError("FINNHUB_API_KEY not set!")
 
 while True:
     ## First get the stock tickers we're interested in
