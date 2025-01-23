@@ -1,0 +1,13 @@
+[Unit]
+Description=Data Ticker for Stocks, VIX, BTC, and Weather.
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+User=david
+WorkingDirectory=/home/david/i2c_display/
+ExecStart=/home/david/i2c_display/bin/python /home/david/i2c_display/lcd_ticker.py
+
+[Install]
+WantedBy=multi-user.target
